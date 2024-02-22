@@ -5,9 +5,10 @@ const Target = require("./models/target");
 require("dotenv").config();
 
 // Connect to MongoDB
-mongoose.connect(
-  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.qrxok3y.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-);
+mongoose.connect(process.env.DB_CONNECT, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Define the initial data
 const targets = [

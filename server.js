@@ -13,7 +13,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.DB_CONNECT);
+mongoose.connect(process.env.DB_CONNECT),
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  };
 
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
