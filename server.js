@@ -67,6 +67,7 @@ db.once("open", async function () {
   try {
     // Delete all documents from the Target collection
     await Target.deleteMany({});
+    await LeaderBoard.deleteMany({});
 
     // Insert the new targets
     try {
@@ -82,25 +83,9 @@ db.once("open", async function () {
 
 app.get("/targets", async (req, res) => {
   try {
-    const targets = await Target.find();
+    const difficulty = req.query.difficulty;
+    const targets = await Target.find({ difficulty });
     res.json(targets);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-app.get("/checkTarget", async (req, res) => {
-  console.log("Check Target" + req.query.difficulty + req.query.targetName);
-  try {
-    const target = await Target.findOne({
-      difficulty: req.query.difficulty,
-      targetName: req.query.targetName,
-    });
-    if (target) {
-      res.json({ x: target.x, y: target.y });
-    } else {
-      res.status(404).json({ message: "Target not found" });
-    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
