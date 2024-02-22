@@ -27,6 +27,12 @@ const targets = [
     y: 75.60130649142795,
   },
   {
+    difficulty: "Hard",
+    targetName: "Wizard Whitebeard",
+    x: 65.74224247704578,
+    y: 77.91666666666667,
+  },
+  {
     difficulty: "Harder",
     targetName: "Waldo",
     x: 57.02335053932669,
