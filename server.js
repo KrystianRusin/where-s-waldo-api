@@ -65,17 +65,15 @@ db.once("open", async function () {
   console.log("Connected to MongoDB");
 
   try {
-    const count = await Target.countDocuments({});
-    if (count === 0) {
-      // If the database is empty, insert the initial data
-      try {
-        await Target.insertMany(targets);
-        console.log("Successfully inserted initial data into the database");
-      } catch (err) {
-        console.error(err);
-      }
-    } else {
-      console.log("Database is not empty. Initial data was not inserted.");
+    // Delete all documents from the Target collection
+    await Target.deleteMany({});
+
+    // Insert the new targets
+    try {
+      await Target.insertMany(targets);
+      console.log("Successfully inserted initial data into the database");
+    } catch (err) {
+      console.error(err);
     }
   } catch (err) {
     console.error(err);
