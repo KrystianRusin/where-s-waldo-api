@@ -19,10 +19,61 @@ mongoose.connect(process.env.DB_CONNECT),
     useUnifiedTopology: true,
   };
 
+const targets = [
+  {
+    difficulty: "Hard",
+    targetName: "Waldo",
+    x: 43.03353390355874,
+    y: 75.60130649142795,
+  },
+  {
+    difficulty: "Harder",
+    targetName: "Waldo",
+    x: 57.02335053932669,
+    y: 35.96223725212945,
+  },
+  {
+    difficulty: "Harder",
+    targetName: "Wizard Whitebeard",
+    x: 84.92438151352493,
+    y: 85.49050225151909,
+  },
+  {
+    difficulty: "Hardest",
+    targetName: "Waldo",
+    x: 17.981867242877357,
+    y: 66.13562266031902,
+  },
+  {
+    difficulty: "Hardest",
+    targetName: "Wizard Whitebeard",
+    x: 95.76428692854003,
+    y: 76.88471476236978,
+  },
+  // Add more targets as needed
+];
+
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", async function () {
   console.log("Connected to MongoDB");
+
+  try {
+    const count = await Target.countDocuments({});
+    if (count === 0) {
+      // If the database is empty, insert the initial data
+      try {
+        await Target.insertMany(targets);
+        console.log("Successfully inserted initial data into the database");
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      console.log("Database is not empty. Initial data was not inserted.");
+    }
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 app.get("/targets", async (req, res) => {
