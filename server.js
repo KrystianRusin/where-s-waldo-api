@@ -6,16 +6,14 @@ const LeaderBoard = require("./models/leaderBoard");
 const dotenv = require("dotenv");
 
 require("dotenv").config();
-const app = express();
 
 const port = process.env.PORT || 5000;
+const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(
-  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.qrxok3y.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-);
+mongoose.connect(process.env.DB_CONNECT);
 
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
